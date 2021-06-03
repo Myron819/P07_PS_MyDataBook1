@@ -19,7 +19,7 @@ public class AnniversaryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        v = inflater.inflate(R.layout.anniversaryfragment, container, false);
+        v = inflater.inflate(R.layout.fragment_anniversary, container, false);
 
         tvAnniversary = v.findViewById(R.id.tvAnniversary);
         btnFragAnniversaryEdit = v.findViewById(R.id.btnFragAnniversaryEdit);
