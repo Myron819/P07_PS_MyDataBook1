@@ -48,16 +48,16 @@ public class AnniversaryFragment extends Fragment {
             AlertDialog.Builder myBuilder = new AlertDialog.Builder(getActivity());
             myBuilder.setView(viewDialog);
             myBuilder.setTitle("Edit Anniversary");
-            String preloadMessage = tvAnniversary.getText().toString();
-            etData.setText(preloadMessage);
+            String preparedMessage = tvAnniversary.getText().toString();
+            etData.setText(preparedMessage);
             
             
             myBuilder.setPositiveButton("OK", (dialog, which) -> {
                 String message = etData.getText().toString();
                 tvAnniversary.setText(message);
 
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                SharedPreferences.Editor prefEdit = prefs.edit();
+                SharedPreferences SharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                SharedPreferences.Editor prefEdit = SharedPreferences.edit();
                 prefEdit.putString("Anniversary", message);
                 prefEdit.apply();
             });
@@ -70,8 +70,8 @@ public class AnniversaryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String currentMessage = prefs.getString("Anniversary","");
+        SharedPreferences SharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String currentMessage = SharedPreferences.getString("Anniversary","");
         tvAnniversary.setText(currentMessage);
     }
 }

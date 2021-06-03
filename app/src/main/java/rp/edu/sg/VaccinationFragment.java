@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 //TODO:Done by Shufang
 public class VaccinationFragment extends Fragment {
     Button btnEditVaccination;
-    TextView tvDisplayVaccination;
+    TextView tvVaccination;
     EditText etData;
 
 
@@ -31,8 +31,7 @@ public class VaccinationFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_vaccination, container, false);
 
-        btnEditVaccination = view.findViewById(R.id.btnEdit);
-        tvDisplayVaccination = view.findViewById(R.id.tvData);
+        tvVaccination = view.findViewById(R.id.tvVaccination);
         etData = view.findViewById(R.id.etData);
 
         btnEditVaccination.setOnClickListener(v -> {
@@ -45,15 +44,15 @@ public class VaccinationFragment extends Fragment {
             myBuilder.setView(viewDialog);
             myBuilder.setTitle("Edit Vaccination");
 
-            String preloadMessage = tvDisplayVaccination.getText().toString();
+            String preloadMessage = tvVaccination.getText().toString();
             etData.setText(preloadMessage);
 
             myBuilder.setPositiveButton("OK", (dialog, which) -> {
                 String message = etData.getText().toString();
-                tvDisplayVaccination.setText(message);
+                tvVaccination.setText(message);
 
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                SharedPreferences.Editor prefEdit = prefs.edit();
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                SharedPreferences.Editor prefEdit = sharedPreferences.edit();
                 prefEdit.putString("Vaccination", message);
                 prefEdit.apply();
             });
@@ -68,8 +67,8 @@ public class VaccinationFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String currentMessage = prefs.getString("Vaccination", "");
-        tvDisplayVaccination.setText(currentMessage);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String currentMessage = sharedPreferences.getString("Vaccination", "");
+        tvVaccination.setText(currentMessage);
     }
 }
