@@ -16,7 +16,8 @@ public class AnniversaryFragment extends Fragment {
     View v;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
                              Bundle savedInstanceState) {
 
         v = inflater.inflate(R.layout.fragment_anniversary, container, false);
