@@ -1,8 +1,9 @@
 package rp.edu.sg;
 
-import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,48 +11,63 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 
 public class BiographyFragment extends Fragment {
 
-    Button btnEdit;
+    Button btnEditBiography;
+    TextView tvBiography;
+    EditText etData;
 
 
     public BiographyFragment() {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_biography, container, false);
-        TextView tvData = (TextView) view.findViewById(R.id.tvData);
-        btnEdit = view.findViewById(R.id.btnEdit);
-        View viewDialog = inflater.inflate(R.layout.edit_dialog, null);
-        EditText etData = (EditText) viewDialog.findViewById(R.id.etData);
-        LayoutInflater inflater1 = (LayoutInflater) getContext().
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+        tvBiography = view.findViewById(R.id.tvBiography);
+        btnEditBiography = view.findViewById(R.id.btnEditBiography);
+        etData = view.findViewById(R.id.etData);
 
-        btnEdit.setOnClickListener(view1 -> {
-            AlertDialog.Builder myBuilder = new AlertDialog.Builder(getContext());
-            myBuilder.setTitle("Edit Biography");
+        btnEditBiography.setOnClickListener(v -> {
+            LayoutInflater inflater1 = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View viewDialog = inflater1.inflate(R.layout.edit_dialog, null);
+
+            final EditText etData = viewDialog.findViewById(R.id.etData);
+
+            AlertDialog.Builder myBuilder = new AlertDialog.Builder(getActivity());
             myBuilder.setView(viewDialog);
-            myBuilder.setCancelable(false);
-            myBuilder.setNegativeButton("Cancel", null);
-            myBuilder.setPositiveButton("Ok", (dialogInterface, i) -> {
-                String data = etData.getText().toString();
-                tvData.setText(data);
-            });
+            myBuilder.setTitle("Edit Biography");
+            String preloadMessage = tvBiography.getText().toString();
+            etData.setText(preloadMessage);
+            myBuilder.setPositiveButton("OK", (dialog, which) -> {
+                String message = etData.getText().toString();
+                tvBiography.setText(message);
 
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                SharedPreferences.Editor prefEdit = prefs.edit();
+                prefEdit.putString("Biography", message);
+                prefEdit.apply();
+            });
+            myBuilder.setNegativeButton("CANCEL", null);
             AlertDialog myDialog = myBuilder.create();
             myDialog.show();
-
         });
-
-
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String currMessage = prefs.getString("Biography", "");
+        tvBiography.setText(currMessage);
     }
 }

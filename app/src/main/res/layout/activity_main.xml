@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <!-- The main content view -->
     <FrameLayout
         android:id="@+id/content_frame"
@@ -13,7 +14,7 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/floatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
@@ -26,7 +27,7 @@
 
     <!-- The navigation drawer -->
     <ListView
-        android:id="@+id/left_drawer"
+        android:id="@+id/lv"
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"

@@ -1,16 +1,13 @@
 package rp.edu.sg;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,18 +18,20 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+
+
+//Test push
 public class MainActivity extends AppCompatActivity {
 
-
-    String[] drawerItems;
+    ActionBarDrawerToggle drawerToggle;
+    ArrayList<String> drawerItems;
     DrawerLayout drawerLayout;
-    ListView drawerList;
-    FloatingActionButton fab;
-    ArrayAdapter<String> aa;
-    String currentTitle;
+    ListView drawerListView;
+    DrawerLayoutArrayAdapter aa;
+    String heading;
     ActionBar ab;
 
-    ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,37 +39,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         drawerLayout = findViewById(R.id.drawer_layout);
-        drawerList = findViewById(R.id.left_drawer);
-        fab = findViewById(R.id.fab);
+        drawerListView = findViewById(R.id.lv);
 
-        currentTitle = this.getTitle().toString();
-
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close) {
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-                ab.setTitle(currentTitle);
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                ab.setTitle("Make a selection");
-            }
-        };
-
-
-        fab.setOnClickListener((View.OnClickListener) view -> drawerLayout.openDrawer(drawerList));
-
-        drawerItems = new String[]{"Biography", "Vaccination", "Anniversary", "About Us"};
+        drawerItems = new ArrayList<>();
+        drawerItems.add("Bio");
+        drawerItems.add("Vaccination");
+        drawerItems.add("Anniversary");
+        drawerItems.add("About us");
         ab = getSupportActionBar();
-        drawerLayout.addDrawerListener(drawerToggle);
-        ab.setDisplayHomeAsUpEnabled(true);
-        aa = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_activated_1, drawerItems);
-        drawerList.setAdapter(aa);
 
-        drawerList.setOnItemClickListener((AdapterView.OnItemClickListener) (adapterView, view, position, l) -> {
+
+        aa = new DrawerLayoutArrayAdapter(this,
+                R.layout.row, drawerItems);
+        drawerListView.setAdapter(aa);
+
+        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(view -> drawerLayout.openDrawer(drawerListView));
+
+        // Set the list's click listener
+        drawerListView.setOnItemClickListener((arg0, arg1, position, arg3) -> {
+
             Fragment fragment = null;
             switch (position) {
                 case 0:
@@ -83,30 +71,58 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new AnniversaryFragment();
                     break;
                 case 3:
-                    Intent i = new Intent(MainActivity.this, AboutUs.class);
-                    startActivity(i);
-                    return;
+                    fragment = new AboutUsFragment();
+                    break;
             }
-
 
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction trans = fm.beginTransaction();
             trans.replace(R.id.content_frame, fragment);
             trans.commit();
 
-
-            drawerList.setItemChecked(position, true);
-            currentTitle = drawerItems[position];
-            ab.setTitle(currentTitle);
-            drawerLayout.closeDrawer(drawerList);
+            // Highlight the selected item,
+            //  update the title, and close the drawer
+            drawerListView.setItemChecked(position, true);
+            heading = drawerItems.get(position);
+            ab.setTitle(heading);
+            drawerLayout.closeDrawer(drawerListView);
         });
+
+        heading = this.getTitle().toString();
+
+        drawerToggle = new ActionBarDrawerToggle(this,
+                drawerLayout,      /* DrawerLayout object */
+                R.string.drawer_open, /* "open drawer" description */
+                R.string.drawer_close /* "close drawer" description */
+        ) {
+
+            /** Would be called when a drawer has completely closed */
+            @Override
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                ab.setTitle(heading);
+            }
+
+            /** Would be called when a drawer has completely open */
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                ab.setTitle("Make a selection");
+            }
+        };
+
+        // Set the drawer toggle as the drawerListViewener
+        drawerLayout.addDrawerListener(drawerToggle);
+        ab.setDisplayHomeAsUpEnabled(true);
 
 
     }
 
     @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+    protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        // Sync toggle state so the indicator is shown properly.
+        //  Have to call in onPostCreate()
         drawerToggle.syncState();
     }
 
@@ -117,9 +133,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (drawerToggle.onOptionsItemSelected(item))
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // The home/up action should open or close the drawer.
+        // ActionBarDrawerToggle will take care of this.
+        if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
+
 }
