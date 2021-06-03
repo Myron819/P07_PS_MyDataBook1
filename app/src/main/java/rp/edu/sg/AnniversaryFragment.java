@@ -16,8 +16,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 // TODO: Done by Jun Kai
-
-
 public class AnniversaryFragment extends Fragment {
 
     Button btnEditAnniversary;
@@ -37,13 +35,13 @@ public class AnniversaryFragment extends Fragment {
 
         btnEditAnniversary = view.findViewById(R.id.btnEditAnniversary);
         tvAnniversary = view.findViewById(R.id.tvAnniversary);
-        etData = view.findViewById(R.id.etData);
+        etData = view.findViewById(R.id.etEdit);
 
         btnEditAnniversary.setOnClickListener(v -> {
             LayoutInflater inflater1 = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View viewDialog = inflater1.inflate(R.layout.edit_dialog, null);
 
-            final EditText etData = viewDialog.findViewById(R.id.etData);
+            final EditText etData = viewDialog.findViewById(R.id.etEdit);
 
             AlertDialog.Builder myBuilder = new AlertDialog.Builder(getActivity());
             myBuilder.setView(viewDialog);

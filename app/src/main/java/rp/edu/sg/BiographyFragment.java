@@ -14,12 +14,12 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-
+// TODO: Done by zizou
 public class BiographyFragment extends Fragment {
 
     Button btnEditBiography;
     TextView tvBiography;
-    EditText etData;
+    EditText etEdit;
 
 
     public BiographyFragment() {
@@ -34,21 +34,21 @@ public class BiographyFragment extends Fragment {
 
         tvBiography = view.findViewById(R.id.tvBiography);
         btnEditBiography = view.findViewById(R.id.btnEditBiography);
-        etData = view.findViewById(R.id.etData);
+        etEdit = view.findViewById(R.id.etEdit);
 
         btnEditBiography.setOnClickListener(v -> {
             LayoutInflater inflater1 = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View viewDialog = inflater1.inflate(R.layout.edit_dialog, null);
 
-            final EditText etData = viewDialog.findViewById(R.id.etData);
+            final EditText etEdit = viewDialog.findViewById(R.id.etEdit);
 
             AlertDialog.Builder myBuilder = new AlertDialog.Builder(getActivity());
             myBuilder.setView(viewDialog);
             myBuilder.setTitle("Edit Biography");
             String preloadMessage = tvBiography.getText().toString();
-            etData.setText(preloadMessage);
+            etEdit.setText(preloadMessage);
             myBuilder.setPositiveButton("OK", (dialog, which) -> {
-                String message = etData.getText().toString();
+                String message = etEdit.getText().toString();
                 tvBiography.setText(message);
 
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());

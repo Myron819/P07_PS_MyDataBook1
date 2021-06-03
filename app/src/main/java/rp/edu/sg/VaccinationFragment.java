@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment;
 public class VaccinationFragment extends Fragment {
     Button btnEditVaccination;
     TextView tvVaccination;
-    EditText etData;
+    EditText etEdit;
 
 
     public VaccinationFragment() {
@@ -30,15 +30,15 @@ public class VaccinationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_vaccination, container, false);
-
+        btnEditVaccination = view.findViewById(R.id.btnEditVaccination);
         tvVaccination = view.findViewById(R.id.tvVaccination);
-        etData = view.findViewById(R.id.etData);
+        etEdit = view.findViewById(R.id.etEdit);
 
         btnEditVaccination.setOnClickListener(v -> {
             LayoutInflater inflater1 = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View viewDialog = inflater1.inflate(R.layout.edit_dialog, null);
 
-            final EditText etData = viewDialog.findViewById(R.id.etData);
+            final EditText etData = viewDialog.findViewById(R.id.etEdit);
 
             AlertDialog.Builder myBuilder = new AlertDialog.Builder(getActivity());
             myBuilder.setView(viewDialog);
