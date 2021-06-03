@@ -2,7 +2,9 @@ package rp.edu.sg;
 
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -79,5 +81,44 @@ public class BiographyFragment extends Fragment {
 
 
         return v;
+    }
+
+
+    // Fetch the stored data in onResume()
+    // Because this is what will be called
+    // when the app opens again
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Fetching the stored data
+        // from the SharedPreference
+        SharedPreferences sh = this.getActivity().getSharedPreferences("biographyPrefs", Context.MODE_PRIVATE);
+
+        String biography = sh.getString("biography", "");
+
+        // Setting the fetched data
+        // in the EditTexts
+        tvBio.setText(biography);
+    }
+
+    // Store the data in the SharedPreference
+    // in the onPause() method
+    // When the user closes the application
+    // onPause() will be called
+    // and data will be stored
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        // Creating a shared pref object
+        // with a file name "MySharedPref"
+        // in private mode
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("BiographyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+
+        // write all the data entered by the user in SharedPreference and apply
+        myEdit.putString("biography", tvBio.getText().toString());
+        myEdit.apply();
     }
 }

@@ -2,7 +2,9 @@ package rp.edu.sg;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -63,5 +65,43 @@ public class AnniversaryFragment extends Fragment {
             myDialog.show();
         });
         return view;
+    }
+
+    // Fetch the stored data in onResume()
+    // Because this is what will be called
+    // when the app opens again
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Fetching the stored data
+        // from the SharedPreference
+        SharedPreferences sh = this.getActivity().getSharedPreferences("AnniversaryPrefs", Context.MODE_PRIVATE);
+
+        String anniversary = sh.getString("anniversary", "");
+
+        // Setting the fetched data
+        // in the EditTexts
+        tvAnniversary.setText(anniversary);
+    }
+
+    // Store the data in the SharedPreference
+    // in the onPause() method
+    // When the user closes the application
+    // onPause() will be called
+    // and data will be stored
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        // Creating a shared pref object
+        // with a file name "MySharedPref"
+        // in private mode
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("AnniversaryPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+
+        // write all the data entered by the user in SharedPreference and apply
+        myEdit.putString("anniversary", tvAnniversary.getText().toString());
+        myEdit.apply();
     }
 }
