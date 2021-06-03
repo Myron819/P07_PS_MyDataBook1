@@ -1,12 +1,8 @@
 package rp.edu.sg;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,44 +10,48 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.fragment.app.Fragment;
 
-// TODO: Done by Zizou
+
 public class BiographyFragment extends Fragment {
 
-    TextView tvBio;
-    Button btnBioEdit;
-    FloatingActionButton btnBioSearch;
+    Button btnEdit;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
+    public BiographyFragment() {
+        // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_biography, container, false);
-        tvBio = view.findViewById(R.id.tvBiography);
-        btnBioEdit = view.findViewById(R.id.btnBiographyEdit);
-        btnBioSearch = view.findViewById(R.id.fabBiographySearch);
+        TextView tvData = (TextView) view.findViewById(R.id.tvData);
+        btnEdit = view.findViewById(R.id.btnEdit);
+        View viewDialog = inflater.inflate(R.layout.edit_dialog, null);
+        EditText etData = (EditText) viewDialog.findViewById(R.id.etData);
+        LayoutInflater inflater1 = (LayoutInflater) getContext().
+                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        btnBioEdit.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Edit Bio");
-            builder.setView(inflater.inflate(R.layout.edit_dialog, null))
-                    .setPositiveButton(R.string.ok, (dialog, which) -> {
-                        Dialog d = (Dialog) dialog;
-                        EditText etDialog = d.findViewById(R.id.etDialogBox);
-                        Log.d("dialog", etDialog.getText().toString());
-                        tvBio.setText(etDialog.getText().toString());
-                        dialog.dismiss();
-                    }).setNegativeButton(R.string.cancel, (dialog, which) -> {
-                Log.d("dialog", "onClick: cancel");
-                dialog.cancel();
+
+        btnEdit.setOnClickListener(view1 -> {
+            AlertDialog.Builder myBuilder = new AlertDialog.Builder(getContext());
+            myBuilder.setTitle("Edit Biography");
+            myBuilder.setView(viewDialog);
+            myBuilder.setCancelable(false);
+            myBuilder.setNegativeButton("Cancel", null);
+            myBuilder.setPositiveButton("Ok", (dialogInterface, i) -> {
+                String data = etData.getText().toString();
+                tvData.setText(data);
             });
-            builder.create().show();
+
+            AlertDialog myDialog = myBuilder.create();
+            myDialog.show();
+
         });
+
+
         return view;
     }
 }

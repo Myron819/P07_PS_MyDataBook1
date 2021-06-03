@@ -3,27 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
-    android:orientation="vertical"
     tools:context=".AnniversaryFragment">
 
+    <!-- TODO: Update blank fragment layout -->
+
+
     <TextView
-        android:id="@+id/tvAnniversary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:id="@+id/tvData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 
     <Button
-        android:id="@+id/btnAnniversaryEdit"
+        android:id="@+id/btnEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="start|bottom"
+        android:layout_gravity="bottom"
         android:text="Edit" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAnninversarySearch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:src="@drawable/ic_baseline_search_24" />
 
 </FrameLayout>

@@ -1,12 +1,9 @@
 package rp.edu.sg;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,52 +11,48 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.fragment.app.Fragment;
 
 //TODO:Done by Shufang
-
 public class VaccinationFragment extends Fragment {
 
-    TextView tvVaccination;
-    Button btnVaccinationEdit;
-    FloatingActionButton fabVaccinationSearch;
+    Button btnEdit;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public VaccinationFragment() {
+        // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_vaccination, container, false);
-        tvVaccination = view.findViewById(R.id.tvVaccination);
-        btnVaccinationEdit = view.findViewById(R.id.btnVaccinationEdit);
-        fabVaccinationSearch = view.findViewById(R.id.fabVaccinationSearch);
+        btnEdit = view.findViewById(R.id.btnEdit);
 
-        btnVaccinationEdit.setOnClickListener(v -> {
+        final TextView tvData = (TextView) view.findViewById(R.id.tvData);
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater1 = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View viewDialog = inflater.inflate(R.layout.edit_dialog, null);
 
-            builder.setTitle("Edit Vaccination");
+        final EditText etData = (EditText) viewDialog.findViewById(R.id.etData);
 
-            builder.setView(inflater.inflate(R.layout.edit_dialog, null))
-
-                    .setPositiveButton(R.string.ok, (dialog, which) -> {
-
-                        Dialog d = (Dialog) dialog;
-                        EditText etDialog = d.findViewById(R.id.etDialogBox);
-                        tvVaccination.setText(etDialog.getText().toString());
-                        dialog.dismiss();
-
-                    }).setNegativeButton(R.string.cancel, (dialog, which) -> {
-
-                Log.d("dialog", "onClick: cancel");
-                dialog.cancel();
+        btnEdit.setOnClickListener(view1 -> {
+            AlertDialog.Builder myBuilder = new AlertDialog.Builder(getContext());
+            myBuilder.setTitle("Edit Anniversaty");
+            myBuilder.setView(viewDialog);
+            myBuilder.setCancelable(false);
+            myBuilder.setNegativeButton("Cancel", null);
+            myBuilder.setPositiveButton("Ok", (dialogInterface, i) -> {
+                String data = etData.getText().toString();
+                tvData.setText(data);
             });
-            builder.create().show();
+
+            AlertDialog myDialog = myBuilder.create();
+            myDialog.show();
 
         });
+
         return view;
     }
 }
