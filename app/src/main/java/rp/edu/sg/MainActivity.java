@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
+    // TODO: Task 1 - Implementing ListView in Navigation Drawer | by Myron
     private String[] drawerItems;
     private DrawerLayout drawerLayout;
     private ListView drawerList;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     String currentTitle;
     ActionBar ab;
 
+    // TODO: Task 1 - Implementing ListView in Navigation Drawer | by Myron
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
