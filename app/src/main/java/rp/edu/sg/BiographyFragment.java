@@ -1,9 +1,11 @@
 package rp.edu.sg;
 
-import android.app.AlertDialog;
+
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -16,42 +18,48 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-// TODO: Done by Zizou
 public class BiographyFragment extends Fragment {
-
     TextView tvBio;
-    Button btnBioEdit;
+    Button btnFragBioEdit;
+    View v;
     FloatingActionButton btnBioSearch;
+    EditText etDialog;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    //ToDo Done by Zuhaili
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_biography, container, false);
-        tvBio = view.findViewById(R.id.tvBiography);
-        btnBioEdit = view.findViewById(R.id.btnBiographyEdit);
-        btnBioSearch = view.findViewById(R.id.fabBiographySearch);
 
-        btnBioEdit.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Edit Bio");
-            builder.setView(inflater.inflate(R.layout.edit_dialog, null))
-                    .setPositiveButton(R.string.ok, (dialog, which) -> {
-                        Dialog d = (Dialog) dialog;
-                        EditText etDialog = d.findViewById(R.id.etDialogBox);
-                        Log.d("dialog", etDialog.getText().toString());
-                        tvBio.setText(etDialog.getText().toString());
-                        dialog.dismiss();
-                    }).setNegativeButton(R.string.cancel, (dialog, which) -> {
-                Log.d("dialog", "onClick: cancel");
-                dialog.cancel();
-            });
-            builder.create().show();
+        v = inflater.inflate(R.layout.fragment_biography, container, false);
+
+        tvBio = v.findViewById(R.id.tvBiography);
+        btnFragBioEdit = v.findViewById(R.id.btnBiographyEdit);
+//        btnBioSearch = view.findViewById(R.id.btnBioSearch);
+
+
+        btnFragBioEdit.setOnClickListener(v -> {
+            AlertDialog.Builder mybuilder = new AlertDialog.Builder(getActivity());
+            mybuilder.setTitle("Edit Bio");
+            mybuilder.setCancelable(false);
+            mybuilder.setView(inflater.inflate(R.layout.edit_dialog, null)).setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Dialog d = (Dialog) dialog;
+                            etDialog = d.findViewById(R.id.etDialogBox);
+                            String message = etDialog.getText().toString();
+                            Log.d("dialog", etDialog.getText().toString());
+                            tvBio.setText(message);
+
+                        }
+                    });
+            mybuilder.setNeutralButton("Cancel", null);
+            AlertDialog myDialog = mybuilder.create();
+            myDialog.show();
+
         });
-        return view;
+
+
+        return v;
     }
 }
