@@ -1,10 +1,8 @@
 package rp.edu.sg;
 
-<<<<<<< HEAD:app/src/main/java/rp/edu/sg/BiographyFragment.java
-=======
+
 import android.app.Dialog;
 import android.content.DialogInterface;
->>>>>>> origin/master:app/src/main/java/rp/edu/sg/BioFragment.java
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -42,17 +40,9 @@ public class BiographyFragment extends Fragment {
 
         btnFragBioEdit.setOnClickListener(v -> {
             AlertDialog.Builder mybuilder = new AlertDialog.Builder(getActivity());
-            mybuilder.setTitle("Edit bio");
+            mybuilder.setTitle("Edit Bio");
             mybuilder.setCancelable(false);
-            mybuilder.setView(inflater.inflate(R.layout.bio_edit_dialog, null))
-<<<<<<< HEAD:app/src/main/java/rp/edu/sg/BiographyFragment.java
-                    .setPositiveButton("ok", (dialog, which) -> {
-                        String message = etDialog.getText().toString();
-                        Log.d("dialog", etDialog.getText().toString());
-                        tvBio.setText(message);
-
-=======
-                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            mybuilder.setView(inflater.inflate(R.layout.bio_edit_dialog, null)).setPositiveButton("ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Dialog d = (Dialog) dialog;
@@ -62,7 +52,6 @@ public class BiographyFragment extends Fragment {
                             tvBio.setText(message);
 
                         }
->>>>>>> origin/master:app/src/main/java/rp/edu/sg/BioFragment.java
                     });
             mybuilder.setNeutralButton("Cancel", null);
             AlertDialog myDialog = mybuilder.create();
