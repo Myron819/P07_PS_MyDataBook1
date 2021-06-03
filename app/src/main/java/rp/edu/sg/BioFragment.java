@@ -1,6 +1,5 @@
 package rp.edu.sg;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
@@ -22,6 +21,7 @@ public class BioFragment extends Fragment {
     Button btnFragBioEdit;
     View v;
     FloatingActionButton btnBioSearch;
+    EditText etDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,30 +32,30 @@ public class BioFragment extends Fragment {
         tvBio = v.findViewById(R.id.tvBio);
         btnFragBioEdit = v.findViewById(R.id.btnFragBioEdit);
 //        btnBioSearch = view.findViewById(R.id.btnBioSearch);
+        etDialog = v.findViewById(R.id.etDialogBox);
 
         btnFragBioEdit.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Edit Bio");
-            builder.setView(inflater.inflate(R.layout.bio_edit_dialog, null))
-                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            AlertDialog.Builder mybuilder = new AlertDialog.Builder(getActivity());
+            mybuilder.setTitle("Edit bio");
+            mybuilder.setCancelable(false);
+            mybuilder.setView(inflater.inflate(R.layout.bio_edit_dialog, null))
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Dialog d = (Dialog) dialog;
-                            EditText etDialog = d.findViewById(R.id.etDialog);
+                            String message = etDialog.getText().toString();
                             Log.d("dialog", etDialog.getText().toString());
-                            tvBio.setText(etDialog.getText().toString());
-                            dialog.dismiss();
-                        }
-                    }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Log.d("dialog", "onClick: cancel");
-                    dialog.cancel();
-                }
-            });
-            builder.create().show();
+                            tvBio.setText(message);
 
-        });
+                        }
+                    });
+            mybuilder.setNeutralButton("Cancel", null);
+            AlertDialog myDialog = mybuilder.create();
+            myDialog.show();
+
+            });
+
+
+
         return v;
     }
 }
