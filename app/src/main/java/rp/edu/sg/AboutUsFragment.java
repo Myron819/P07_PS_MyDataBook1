@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso;
 
 public class AboutUsFragment extends Fragment {
 
-    ImageView iv;
+    ImageView ivPicture;
     TextView tvAuthors, tvModule;
 
 
@@ -29,14 +29,15 @@ public class AboutUsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_about_us, container, false);
 
+
         tvAuthors = view.findViewById(R.id.tvAuthor);
         tvModule = view.findViewById(R.id.tvModule);
-        iv = view.findViewById(R.id.ivPicture);
+        ivPicture = view.findViewById(R.id.ivPicture);
 
         tvAuthors.setText("Created by: Dana White");
         tvModule.setText("President of the Ultimate Fighting Championship (UFC)");
-        String imageUrl = "https://upload.wikimedia.org/wikipedia/commons/e/ec/Dana_White_-_London_2015_%28cropped%29.jpg";
-        Picasso.with(getContext()).load(imageUrl).placeholder(R.drawable.ajax_loader).error(R.drawable.error).into(iv);
+        String imageUrl = "https://u2v2u3t5.stackpathcdn.com/wp-content/uploads/2015/07/dana-white-twitter.jpg";
+        Picasso.with(getContext()).load(imageUrl).placeholder(R.drawable.ajax_loader).error(R.drawable.error).into(ivPicture);
 
 
         return view;

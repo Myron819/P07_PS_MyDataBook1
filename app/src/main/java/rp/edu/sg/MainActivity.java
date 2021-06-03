@@ -21,7 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 
-//Test push
+//
 public class MainActivity extends AppCompatActivity {
 
     ActionBarDrawerToggle drawerToggle;
