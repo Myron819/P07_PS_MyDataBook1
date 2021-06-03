@@ -1,5 +1,13 @@
 package rp.edu.sg;
 
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,23 +16,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.res.Configuration;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
 public class MainActivity extends AppCompatActivity {
+
     // TODO: Task 1 - Implementing ListView in Navigation Drawer | by Myron
-    private String[] drawerItems;
-    private DrawerLayout drawerLayout;
-    private ListView drawerList;
+    static String[] drawerItems;
+    static DrawerLayout drawerLayout;
+    static ListView drawerList;
     ArrayAdapter<String> aa;
     String currentTitle;
     ActionBar ab;
-    private ActionBarDrawerToggle drawerToggle;
+    static ActionBarDrawerToggle drawerToggle;
 
     // TODO: Task 1 - Implementing ListView in Navigation Drawer | by Myron
     @Override
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         drawerList = findViewById(R.id.left_drawer);
 
-        drawerItems = new String[]{"Bio", "Vaccination", "Anniversary"};
+        drawerItems = new String[]{"Biography", "Vaccination", "Anniversary", "About Us"};
         ab = getSupportActionBar();
 
         aa = new ArrayAdapter<>(this,
@@ -46,15 +47,30 @@ public class MainActivity extends AppCompatActivity {
         drawerList.setOnItemClickListener((arg0, arg1, position, arg3) -> {
 
             Fragment fragment = null;
-            if (position == 0)
-                fragment = new BiographyFragment();
-            else if (position == 1)
-                fragment = new VaccinationFragment();
-            else if (position == 2)
-                fragment = new AnniversaryFragment();
+            String msg = "";
+            switch (position) {
+
+                case 0:
+                    fragment = new BiographyFragment();
+                    break;
+
+                case 1:
+                    fragment = new VaccinationFragment();
+                    break;
+
+                case 2:
+                    fragment = new AnniversaryFragment();
+                    break;
+
+                case 3:
+                    fragment = new AboutUsFragment();
+
+                    break;
+            }
 
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction trans = fm.beginTransaction();
+            assert fragment != null;
             trans.replace(R.id.content_frame, fragment);
             trans.commit();
 
@@ -70,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         currentTitle = this.getTitle().toString();
 
         drawerToggle = new ActionBarDrawerToggle(this,
-                drawerLayout, 	  /* DrawerLayout object */
+                drawerLayout,      /* DrawerLayout object */
                 R.string.drawer_open, /* "open drawer" description */
                 R.string.drawer_close /* "close drawer" description */
         ) {
@@ -104,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
