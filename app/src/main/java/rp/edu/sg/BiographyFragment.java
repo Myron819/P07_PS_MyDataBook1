@@ -82,7 +82,7 @@ public class BiographyFragment extends Fragment {
 
         // Fetching the stored data
         // from the SharedPreference
-        SharedPreferences sh = this.getActivity().getSharedPreferences("biographyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences sh = this.getActivity().getSharedPreferences("BiographyPrefs", Context.MODE_PRIVATE);
 
         String biography = sh.getString("biography", "");
 

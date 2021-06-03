@@ -76,7 +76,7 @@ public class VaccinationFragment extends Fragment {
 
         // Fetching the stored data
         // from the SharedPreference
-        SharedPreferences sh = this.getActivity().getSharedPreferences("vaccinationPrefs", Context.MODE_PRIVATE);
+        SharedPreferences sh = this.getActivity().getSharedPreferences("VaccinationPrefs", Context.MODE_PRIVATE);
 
         String vaccination = sh.getString("vaccination", "");
 
