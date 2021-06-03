@@ -1,11 +1,9 @@
 package rp.edu.sg;
 
+import android.annotation.SuppressLint;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -16,122 +14,82 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.navigation.NavigationView;
+
 public class MainActivity extends AppCompatActivity {
 
-    // TODO: Task 1 - Implementing ListView in Navigation Drawer | by Myron
-    static String[] drawerItems;
-    static DrawerLayout drawerLayout;
-    static ListView drawerList;
-    ArrayAdapter<String> aa;
-    String currentTitle;
-    ActionBar ab;
-    static ActionBarDrawerToggle drawerToggle;
+    DrawerLayout drawerLayout;
+    ActionBarDrawerToggle toggle;
+    NavigationView navigationView;
+    ActionBar actionBar;
 
-    // TODO: Task 1 - Implementing ListView in Navigation Drawer | by Myron
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        drawerLayout = findViewById(R.id.drawer_layout);
-        drawerList = findViewById(R.id.left_drawer);
+        drawerLayout = findViewById(R.id.drawerLayout);
+        navigationView = findViewById(R.id.navigationView);
+        actionBar = getSupportActionBar();
 
-        drawerItems = new String[]{"Biography", "Vaccination", "Anniversary", "About Us"};
-        ab = getSupportActionBar();
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close);
+        drawerLayout.addDrawerListener(toggle);
 
-        aa = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_activated_1, drawerItems);
-        drawerList.setAdapter(aa);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-        // Set the list's click listener
-        drawerList.setOnItemClickListener((arg0, arg1, position, arg3) -> {
-
+        navigationView.setNavigationItemSelectedListener(item -> {
             Fragment fragment = null;
-            String msg = "";
-            switch (position) {
+            String message = "";
 
-                case 0:
+
+            switch (item.getItemId()) {
+                case R.id.menuItemBiography:
                     fragment = new BiographyFragment();
+                    message = "Biography";
                     break;
-
-                case 1:
+                case R.id.menuItemVaccination:
                     fragment = new VaccinationFragment();
+                    message = "Vaccination";
                     break;
-
-                case 2:
+                case R.id.menuItemAnniversary:
                     fragment = new AnniversaryFragment();
+                    message = "Anniversary";
                     break;
-
-                case 3:
+                case R.id.menuItemAboutUs:
                     fragment = new AboutUsFragment();
-
+                    message = "About Us";
                     break;
             }
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction trans = fm.beginTransaction();
             assert fragment != null;
-            trans.replace(R.id.content_frame, fragment);
-            trans.commit();
-
-            // Highlight the selected item,
-            //  update the title, and close the drawer
-            drawerList.setItemChecked(position, true);
-            currentTitle = drawerItems[position];
-            ab.setTitle(currentTitle);
-            drawerLayout.closeDrawer(drawerList);
+            transaction.replace(R.id.frameLayout, fragment);
+            transaction.commit();
+            actionBar.setTitle(message);
+            drawerLayout.closeDrawers();
+            return true;
         });
-
-        //ToDo Opening and Closing Drawer with ActionBar Title. Done by Zuhaili
-        currentTitle = this.getTitle().toString();
-
-        drawerToggle = new ActionBarDrawerToggle(this,
-                drawerLayout,      /* DrawerLayout object */
-                R.string.drawer_open, /* "open drawer" description */
-                R.string.drawer_close /* "close drawer" description */
-        ) {
-
-            /** Would be called when a drawer has completely closed */
-            @Override
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                ab.setTitle(currentTitle);
-            }
-
-            /** Would be called when a drawer has completely open */
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                ab.setTitle("Make a selection");
-            }
-        };
-
-        // Set the drawer toggle as the DrawerListener
-        drawerLayout.addDrawerListener(drawerToggle);
-        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        // Sync toggle state so the indicator is shown properly.
-        //  Have to call in onPostCreate()
-        drawerToggle.syncState();
+        toggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        drawerToggle.onConfigurationChanged(newConfig);
+        toggle.syncState();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // The home/up action should open or close the drawer.
-        // ActionBarDrawerToggle will take care of this.
-        if (drawerToggle.onOptionsItemSelected(item))
+        if (toggle.onOptionsItemSelected(item)) {
             return true;
-
+        }
         return super.onOptionsItemSelected(item);
     }
 }
