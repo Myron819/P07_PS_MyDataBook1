@@ -43,18 +43,7 @@ public class BiographyFragment extends Fragment {
         tvBio = v.findViewById(R.id.tvBiography);
         btnFragBioEdit = v.findViewById(R.id.btnBiographyEdit);
 //        btnBioSearch = view.findViewById(R.id.btnBioSearch);
-        FloatingActionButton fab = v.findViewById(R.id.fabBiographySearch);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //action
-                //if you need open the slide:
-//                drawerLayout.openDrawer(Gravity.LEFT);
 
-                //if you need close the slide
-//                drawerLayout.closeDrawer(Gravity.LEFT);
-            }
-        });
 
 
 
