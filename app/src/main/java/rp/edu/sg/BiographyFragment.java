@@ -3,12 +3,15 @@ package rp.edu.sg;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +27,7 @@ public class BiographyFragment extends Fragment {
     View v;
     FloatingActionButton btnBioSearch;
     EditText etDialog;
+    private DrawerLayout drawerLayout;
 
     //ToDo Done by Zuhaili
 
@@ -33,9 +37,23 @@ public class BiographyFragment extends Fragment {
 
         v = inflater.inflate(R.layout.fragment_biography, container, false);
 
+        drawerLayout = v.findViewById(R.id.drawerLayout);
         tvBio = v.findViewById(R.id.tvBiography);
         btnFragBioEdit = v.findViewById(R.id.btnBiographyEdit);
 //        btnBioSearch = view.findViewById(R.id.btnBioSearch);
+        FloatingActionButton fab = v.findViewById(R.id.fabBiographySearch);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //action
+                //if you need open the slide:
+//                drawerLayout.openDrawer(Gravity.LEFT);
+
+                //if you need close the slide
+//                drawerLayout.closeDrawer(Gravity.LEFT);
+            }
+        });
+
 
 
         btnFragBioEdit.setOnClickListener(v -> {
