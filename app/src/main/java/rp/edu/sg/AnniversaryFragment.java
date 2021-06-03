@@ -1,33 +1,59 @@
 package rp.edu.sg;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+// TODO: Done by Jun Kai
 public class AnniversaryFragment extends Fragment {
-    TextView tvAnniversary;
-    Button btnFragAnniversaryEdit;
-    View v;
+
+    TextView tvVaccination;
+    Button btnAnniversaryEdit;
+    FloatingActionButton fabAnninversarySearch;
 
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container,
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_anniversary, container, false);
+        tvVaccination = view.findViewById(R.id.tvVaccination);
+        btnAnniversaryEdit = view.findViewById(R.id.btnAnniversaryEdit);
+        fabAnninversarySearch = view.findViewById(R.id.fabAnninversarySearch);
 
-        v = inflater.inflate(R.layout.fragment_anniversary, container, false);
+        fabAnninversarySearch.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Edit Anniversary");
 
-        tvAnniversary = v.findViewById(R.id.tvAnniversary);
-        btnFragAnniversaryEdit = v.findViewById(R.id.btnFragAnniversaryEdit);
+            builder.setView(inflater.inflate(R.layout.edit_dialog, null))
 
-        btnFragAnniversaryEdit.setOnClickListener(v -> {
-
+                    .setPositiveButton(R.string.ok, (dialog, which) -> {
+                        Dialog d = (Dialog) dialog;
+                        EditText etDialog = d.findViewById(R.id.etDialogBox);
+                        tvVaccination.setText(etDialog.getText().toString());
+                        dialog.dismiss();
+                    }).setNegativeButton(R.string.cancel, (dialog, which) -> {
+                Log.d("dialog", "onClick: cancel");
+                dialog.cancel();
+            });
+            builder.create().show();
         });
-        return v;
+        return view;
     }
 }
