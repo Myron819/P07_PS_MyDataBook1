@@ -33,8 +33,8 @@ public class BiographyFragment extends Fragment {
 
         v = inflater.inflate(R.layout.fragment_biography, container, false);
 
-        tvBio = v.findViewById(R.id.tvBio);
-        btnFragBioEdit = v.findViewById(R.id.btnFragBioEdit);
+        tvBio = v.findViewById(R.id.tvBiography);
+        btnFragBioEdit = v.findViewById(R.id.btnBiographyEdit);
 //        btnBioSearch = view.findViewById(R.id.btnBioSearch);
 
 
@@ -42,7 +42,7 @@ public class BiographyFragment extends Fragment {
             AlertDialog.Builder mybuilder = new AlertDialog.Builder(getActivity());
             mybuilder.setTitle("Edit Bio");
             mybuilder.setCancelable(false);
-            mybuilder.setView(inflater.inflate(R.layout.bio_edit_dialog, null)).setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            mybuilder.setView(inflater.inflate(R.layout.edit_dialog, null)).setPositiveButton("ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Dialog d = (Dialog) dialog;
