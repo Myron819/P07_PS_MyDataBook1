@@ -1,5 +1,6 @@
 package rp.edu.sg;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
@@ -23,6 +24,8 @@ public class BioFragment extends Fragment {
     FloatingActionButton btnBioSearch;
     EditText etDialog;
 
+    //ToDo Done by Zuhaili
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -32,7 +35,7 @@ public class BioFragment extends Fragment {
         tvBio = v.findViewById(R.id.tvBio);
         btnFragBioEdit = v.findViewById(R.id.btnFragBioEdit);
 //        btnBioSearch = view.findViewById(R.id.btnBioSearch);
-        etDialog = v.findViewById(R.id.etDialogBox);
+
 
         btnFragBioEdit.setOnClickListener(v -> {
             AlertDialog.Builder mybuilder = new AlertDialog.Builder(getActivity());
@@ -42,6 +45,8 @@ public class BioFragment extends Fragment {
                     .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            Dialog d = (Dialog) dialog;
+                            etDialog = d.findViewById(R.id.etDialogBox);
                             String message = etDialog.getText().toString();
                             Log.d("dialog", etDialog.getText().toString());
                             tvBio.setText(message);
