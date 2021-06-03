@@ -22,6 +22,11 @@ public class AnniversaryFragment extends Fragment {
 
     TextView tvVaccination;
     Button btnAnniversaryEdit;
+
+    // loating action buttons are used for a special type of
+    // promoted action. They are distinguished by a circled icon floating
+    // above the UI and have special motion behaviors related to morphing,
+    // launching, and the transferring anchor point.
     FloatingActionButton fabAnninversarySearch;
 
     @Override
@@ -37,7 +42,7 @@ public class AnniversaryFragment extends Fragment {
         btnAnniversaryEdit = view.findViewById(R.id.btnAnniversaryEdit);
         fabAnninversarySearch = view.findViewById(R.id.fabAnninversarySearch);
 
-        fabAnninversarySearch.setOnClickListener(v -> {
+        btnAnniversaryEdit.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle("Edit Anniversary");
 
