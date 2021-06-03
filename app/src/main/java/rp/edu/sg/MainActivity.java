@@ -1,13 +1,16 @@
 package rp.edu.sg;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<String> aa;
     String currentTitle;
     ActionBar ab;
+    private ActionBarDrawerToggle drawerToggle;
 
     // TODO: Task 1 - Implementing ListView in Navigation Drawer | by Myron
     @Override
@@ -61,5 +65,57 @@ public class MainActivity extends AppCompatActivity {
             ab.setTitle(currentTitle);
             drawerLayout.closeDrawer(drawerList);
         });
+
+        //ToDo Opening and Closing Drawer with ActionBar Title. Done by Zuhaili
+        currentTitle = this.getTitle().toString();
+
+        drawerToggle = new ActionBarDrawerToggle(this,
+                drawerLayout, 	  /* DrawerLayout object */
+                R.string.drawer_open, /* "open drawer" description */
+                R.string.drawer_close /* "close drawer" description */
+        ) {
+
+            /** Would be called when a drawer has completely closed */
+            @Override
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                ab.setTitle(currentTitle);
+            }
+
+            /** Would be called when a drawer has completely open */
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                ab.setTitle("Make a selection");
+            }
+        };
+
+        // Set the drawer toggle as the DrawerListener
+        drawerLayout.addDrawerListener(drawerToggle);
+        ab.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync toggle state so the indicator is shown properly.
+        //  Have to call in onPostCreate()
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // The home/up action should open or close the drawer.
+        // ActionBarDrawerToggle will take care of this.
+        if (drawerToggle.onOptionsItemSelected(item))
+            return true;
+
+        return super.onOptionsItemSelected(item);
     }
 }
